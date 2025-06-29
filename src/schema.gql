@@ -22,14 +22,38 @@ type AuthPayload {
   user: UserObject!
 }
 
+type ProjectObject {
+  id: String!
+  name: String!
+  description: String
+  color: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  userRole: ProjectRole!
+}
+
+enum ProjectRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+type DeleteProjectResponse {
+  success: Boolean!
+}
+
 type Query {
-  hello: String!
   me: UserObject!
+  myProjects: [ProjectObject!]!
+  project(id: String!): ProjectObject!
 }
 
 type Mutation {
   register(input: RegisterInput!): AuthPayload!
   login(input: LoginInput!): AuthPayload!
+  createProject(input: CreateProjectInput!): ProjectObject!
+  updateProject(id: String!, input: UpdateProjectInput!): ProjectObject!
+  deleteProject(id: String!): DeleteProjectResponse!
 }
 
 input RegisterInput {
@@ -41,4 +65,16 @@ input RegisterInput {
 input LoginInput {
   email: String!
   password: String!
+}
+
+input CreateProjectInput {
+  name: String!
+  description: String
+  color: String
+}
+
+input UpdateProjectInput {
+  name: String
+  description: String
+  color: String
 }

@@ -4,11 +4,10 @@ import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { AppResolver } from './app.resolver'; // ← NUEVO
+import { Request } from 'express';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
+import { ProjectsModule } from './projects/projects.module'; // ← NUEVO
 
 @Module({
   imports: [
@@ -21,11 +20,13 @@ import { AuthModule } from './auth/auth.module';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       playground: true,
       introspection: true,
+      context: ({ req }: { req: Request }) => ({ req }),
     }),
     PrismaModule,
     AuthModule,
+    ProjectsModule, // ← AGREGAR
   ],
-  controllers: [AppController],
-  providers: [AppService, AppResolver], // ← AGREGAR AppResolver
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
