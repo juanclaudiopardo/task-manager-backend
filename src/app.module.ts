@@ -7,7 +7,8 @@ import { join } from 'path';
 import { Request } from 'express';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
-import { ProjectsModule } from './projects/projects.module'; // ← NUEVO
+import { ProjectsModule } from './projects/projects.module';
+import { TasksModule } from './tasks/tasks.module'; // ← NUEVO
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { ProjectsModule } from './projects/projects.module'; // ← NUEVO
     }),
     PrismaModule,
     AuthModule,
-    ProjectsModule, // ← AGREGAR
+    ProjectsModule,
+    TasksModule, // ← AGREGAR
   ],
   controllers: [],
   providers: [],
